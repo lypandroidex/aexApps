@@ -1,34 +1,128 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.androidex.apps.home.Fragment.OtherCard"
-    android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f8f8f8"
+                tools:context="com.androidex.apps.home.fragment.OtherCardFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/ic_launcher"
+        android:scaleType="fitXY"/>
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/iv_image"
+        android:background="@drawable/edxitext_style"
+        android:hint="@string/input_money"
+        android:inputType="number"/>
+
+
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-           android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/default_wallpaper"
-            android:id="@+id/iv_image"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/et_input"
+        android:background="@drawable/bg_white_radius_5">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="上一步"
+            android:textColor="#333"
+            android:textSize="15sp"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:background="#ddd"/>
+
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="完成"
-            android:textColor="#000"
-            android:id="@+id/bt_finish"
-            android:layout_gravity="bottom"/>
+            android:textColor="#333"
+            android:textSize="15sp"/>
+
+
     </LinearLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cardinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/et_input"
+        android:layout_alignTop="@+id/iv_image"
+        android:background="@drawable/bg_white_radius_5"
+        android:text="显示卡的信息"
+        android:textColor="#666"
+        android:textSize="20sp"/>
+
+    <RadioGroup
+        android:id="@+id/rg_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_image"
+        android:layout_alignStart="@+id/et_input"
+        android:layout_marginTop="@dimen/marginPadding10dp"
+        android:orientation="horizontal"
+        >
+
+
+        <RadioButton
+            android:id="@+id/rb_one"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_money_select"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="10"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_two"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/marginPadding10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_money_select"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="50"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_three"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/marginPadding10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_money_select"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="100"/>
+
+    </RadioGroup>
+
+</RelativeLayout>

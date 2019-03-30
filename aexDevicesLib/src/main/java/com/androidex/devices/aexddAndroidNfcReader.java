@@ -2,25 +2,29 @@ package com.androidex.devices;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
+import android.nfc.tech.NfcF;
 import android.os.Build;
 
+import com.androidex.devices.tech.FelicaReader;
+import com.androidex.devices.tech.pboc.StandardPboc;
 import com.androidex.logger.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 
 /**
  * Created by yangjun on 2016/11/6.
  */
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.ReaderCallback{
+public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.ReaderCallback {
     private static final String TAG = "AndroidNfc";
     // Recommend NfcAdapter flags for reading from other Android devices. Indicates that this
     // activity is interested in NFC-A devices (including other Android devices), and that the
@@ -33,22 +37,33 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
     protected static final String SELECT_APDU_HEADER = "00A40400";
     // "OK" status word sent in response to SELECT AID command (0x9000)
     protected static final byte[] SELECT_OK_SW = {(byte) 0x90, (byte) 0x00};
+    public static final String START_ACTION = "com.androidex.apps.home.transationactivity.isdep";
+    public static final String NFCF = "com.androidex.apps.home.transationactivity.nfcf";
+    private static aexddAndroidNfcReader mAexddAndroidNfcReader;
 
-    public aexddAndroidNfcReader(Context ctx) {
+    public static aexddAndroidNfcReader getInstance(Context ctx) {
+        if (mAexddAndroidNfcReader == null) {
+            mAexddAndroidNfcReader = new aexddAndroidNfcReader(ctx);
+        }
+        return mAexddAndroidNfcReader;
+    }
+
+    private aexddAndroidNfcReader(Context ctx) {
         super(ctx);
-        if((ctx != null) && (ctx instanceof AccountCallback)){
-            AccountCallback listener = (AccountCallback)ctx;
+        if ((ctx != null) && (ctx instanceof AccountCallback)) {
+            AccountCallback listener = (AccountCallback) ctx;
             mAccountCallback = new WeakReference<AccountCallback>(listener);
         }
     }
 
     public aexddAndroidNfcReader(Context ctx, JSONObject args) {
         super(ctx, args);
-        if((ctx != null) && (ctx instanceof AccountCallback)){
-            AccountCallback listener = (AccountCallback)ctx;
+        if ((ctx != null) && (ctx instanceof AccountCallback)) {
+            AccountCallback listener = (AccountCallback) ctx;
             mAccountCallback = new WeakReference<AccountCallback>(listener);
         }
     }
+
     // Weak reference to prevent retain loop. mAccountCallback is responsible for exiting
     // foreground mode before it becomes invalid (e.g. during onPause() or onStop()).
     private WeakReference<AccountCallback> mAccountCallback;
@@ -59,7 +74,7 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
 
     /**
      * Callback when a new tag is discovered by the system.
-     *
+     * <p>
      * <p>Communication with the card should take place here.
      *
      * @param tag Discovered tag
@@ -67,11 +82,18 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
     @Override
     public void onTagDiscovered(Tag tag) {
         Log.i(TAG, "发现新卡");
+        android.util.Log.d(TAG, "onTagDiscovered: "+tag.toString());
+        //发送广播
+        Intent intent = new Intent();
+        intent.setAction(START_ACTION);
+        //intent.putExtra("cardinfo",r.toString());
+        mContext.sendBroadcast(intent);
         // Android's Host-based Card Emulation (HCE) feature implements the ISO-DEP (ISO 14443-4)
         // protocol.
         //
         // In order to communicate with a device using HCE, the discovered tag should be processed
         // using the IsoDep class.
+        /*
         IsoDep isoDep = IsoDep.get(tag);
         if (isoDep != null) {
             try {
@@ -101,6 +123,44 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
                 Log.e(TAG, "与卡通讯发生错误: " + e.toString());
             }
         }
+        */
+
+        final IsoDep isodep = IsoDep.get(tag);
+        if (isodep != null) {
+            try {
+                JSONObject r = StandardPboc.readCard(isodep);
+                try {
+                    Log.d(TAG, r.toString(4));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d(TAG, "卡内无信息");
+        }
+
+        final NfcF nfcf = NfcF.get(tag);
+        if (nfcf != null) {
+            try {
+                JSONObject r = FelicaReader.readCard(nfcf);
+                Intent intent1 = new Intent();
+                intent.setAction(NFCF);
+                mContext.sendBroadcast(intent1);
+                try {
+                    Log.d(TAG, r.toString(4));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -122,10 +182,10 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
      * @return String, containing hexadecimal representation.
      */
     public static String ByteArrayToHexString(byte[] bytes) {
-        final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         char[] hexChars = new char[bytes.length * 2];
         int v;
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -135,7 +195,7 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
 
     /**
      * Utility class to convert a hexadecimal string to a byte string.
-     *
+     * <p>
      * <p>Behavior with input strings containing non-hexadecimal characters is undefined.
      *
      * @param s String containing hexadecimal characters to convert
@@ -146,9 +206,8 @@ public class aexddAndroidNfcReader extends aexddNfcReader implements NfcAdapter.
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }
-
 }

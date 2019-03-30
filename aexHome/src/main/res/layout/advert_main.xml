@@ -1,21 +1,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+    >
+
 
     <ImageView
         android:id="@+id/picsw"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.41"
-        android:src="@drawable/androidex"/>
-
-    <!--为了测试方便增加的退出按钮-->
-    <Button
-        android:id="@+id/btn_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="退出"/>
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        />
+
+    <com.androidex.apps.home.view.CircleTextProgressbar
+        android:id="@+id/progressbar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:onClick="onClick"
+        android:text="30s"
+        app:in_circle_color="@color/state_color"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/marginPadding20"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/tv_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size14"/>
+        <TextView
+            android:id="@+id/tv_sdkversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size14"/>
+
+        <TextView
+            android:id="@+id/tv_start_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size14"/>
+
+        <TextView
+            android:id="@+id/tv_maturing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size14"/>
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

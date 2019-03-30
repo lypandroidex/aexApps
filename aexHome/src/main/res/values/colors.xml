@@ -16,6 +16,7 @@
     <color name="simiple_button_color">#FFF</color>
     <color name="simple_text_color">#FF52991F</color>
     <color name="body_background">#FFF</color>
+    <color name="white">#ffffff</color>
 
     <color name="clear">#00000000</color>
     <color name="colorPrimary">#FF000000</color>
@@ -45,6 +46,10 @@
     <color name="switch_color">#4d78d2</color>
     <color name="title_background">#545454</color>
     <color name="line_background">#dddddd</color>
+    <color name="floatbutton_back">#3aa12b</color>
 
+    <color name="rb_money_select_color">#6699ff</color>
 
+    <color name="_yello">#f2ea47</color>
+    <color name="blue">#2c364d</color>
 </resources>

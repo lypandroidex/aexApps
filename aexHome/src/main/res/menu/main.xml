@@ -1,9 +1,97 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="设置"/>
+        android:title="系统设置"/>
+
+    <item
+        android:id="@+id/action_startEthernet"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="打开以太网"/>
+
+    <item
+        android:id="@+id/action_closeEthernet"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="关闭以太网"/>
+
+    <item
+        android:id="@+id/action_setuuid"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="写入UUID"/>
+    <item
+        android:id="@+id/action_print"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="测试打印机"/>
+    <item
+        android:id="@+id/action_reader"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="测试读卡器"/>
+    <item
+        android:id="@+id/action_cas_reader"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="测试燃气卡"/>
+    <item
+        android:id="@+id/action_password_key"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="测试密码键盘"/>
+    <item
+        android:id="@+id/action_x3biovo"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="测试指纹仪"/>
+
+    <item
+        android:id="@+id/action_camera"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="打开相机"/>
+
+    <item
+        android:id="@+id/action_video"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="播放视频"/>
+
+    <item
+        android:id="@+id/action_record_voice"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="录音测试"/>
+
+    <item
+        android:id="@+id/action_onekey_text"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="一键测试"/>
+
+    <item
+        android:id="@+id/action_stop_reboot"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="退出老化"/>
+    <item
+        android:id="@+id/action_exit_fullscreen"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="退出全屏"/>
+    <item
+        android:id="@+id/action_start_otherapk"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="启动其他程序"/>
+    <item
+        android:id="@+id/action_unintall"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="一键卸载"/>
 
 </menu>
