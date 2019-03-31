@@ -50,11 +50,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:support-v4:22.2.1'
-    testCompile 'junit:junit:4.12'
-    compile(name: 'appLibs', ext: 'aar')
+    implementation 'com.android.support:appcompat-v7:22.2.1'
+    implementation 'com.android.support:design:22.2.1'
+    implementation 'com.android.support:support-v4:22.2.1'
+    testImplementation 'junit:junit:4.12'
+    implementation(name: 'appLibs', ext: 'aar')
 }

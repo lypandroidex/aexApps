@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.androidex.comassistant"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 26
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_5
             targetCompatibility JavaVersion.VERSION_1_5
@@ -27,7 +27,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jni'] } }
+    sourceSets.main{
+        jni.srcDirs = []
+        jniLibs.srcDir "src/main/libs"
+    }
+
     /** 导入so文件 */
     task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
         destinationDir file("$projectDir/libs")
@@ -45,14 +49,16 @@ android {
             dirs 'libs'
         }
     }
+    buildTypes{
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
 
 }

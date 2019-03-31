@@ -110,7 +110,7 @@ public class SerialPortFinder {
     public String[] getAllDevicesPath() {
         Vector<String> devices = new Vector<String>();
 
-        devices.add("/dev/ttyGS0");
+        /*devices.add("/dev/ttyGS0");
         devices.add("/dev/ttyGS1");
         devices.add("/dev/ttyGS2");
         devices.add("/dev/ttyGS3");
@@ -119,23 +119,23 @@ public class SerialPortFinder {
         devices.add("/dev/ttymxc2");
         devices.add("/dev/ttymxc3");
         devices.add("/dev/ttymxc4");
-
+*/
         /********此处用在飞思卡尔的主控上会崩溃，顾把写成了上面的写法*************/
-//		// Parse each driver
-//		Iterator<Driver> itdriv;
-//		try {
-//			itdriv = getDrivers().iterator();
-//			while(itdriv.hasNext()) {
-//				Driver driver = itdriv.next();
-//				Iterator<File> itdev = driver.getDevices().iterator();
-//				while(itdev.hasNext()) {
-//					String device = itdev.next().getAbsolutePath();
-//					devices.add(device);
-//				}
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		// Parse each driver
+		Iterator<Driver> itdriv;
+		try {
+			itdriv = getDrivers().iterator();
+			while(itdriv.hasNext()) {
+				Driver driver = itdriv.next();
+				Iterator<File> itdev = driver.getDevices().iterator();
+				while(itdev.hasNext()) {
+					String device = itdev.next().getAbsolutePath();
+					devices.add(device);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
         return devices.toArray(new String[devices.size()]);
     }
